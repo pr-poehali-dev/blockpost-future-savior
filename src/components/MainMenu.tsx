@@ -18,7 +18,7 @@ export default function MainMenu({ onNavigate }: MainMenuProps) {
       <div className="max-w-md w-full space-y-8 animate-fade-in">
         <div className="text-center space-y-4">
           <h1 className="text-6xl font-bold text-primary animate-scale-in">
-            BLOCKPOST
+            ROADBLOCK
           </h1>
           <p className="text-2xl text-muted-foreground">MOBILE</p>
         </div>

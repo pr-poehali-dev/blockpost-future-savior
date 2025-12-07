@@ -49,13 +49,13 @@ export default function ProfileScreen({ onBack }: ProfileScreenProps) {
             <div className="flex items-center gap-6">
               <Avatar className="w-24 h-24 border-4 border-primary">
                 <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
-                  BP
+                  RB
                 </AvatarFallback>
               </Avatar>
 
               <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-1">BlockPostPro</h3>
-                <p className="text-muted-foreground mb-3">ID: #BP-2847</p>
+                <h3 className="text-2xl font-bold mb-1">RoadBlockPro</h3>
+                <p className="text-muted-foreground mb-3">ID: #RB-2847</p>
                 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
