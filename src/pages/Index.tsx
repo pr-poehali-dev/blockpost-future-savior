@@ -5,8 +5,9 @@ import ShopScreen from '@/components/ShopScreen';
 import ProfileScreen from '@/components/ProfileScreen';
 import AchievementsScreen from '@/components/AchievementsScreen';
 import ChallengesScreen from '@/components/ChallengesScreen';
+import LeaderboardScreen from '@/components/LeaderboardScreen';
 
-type Screen = 'menu' | 'game' | 'shop' | 'profile' | 'achievements' | 'challenges';
+type Screen = 'menu' | 'game' | 'shop' | 'profile' | 'achievements' | 'challenges' | 'leaderboard';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('menu');
@@ -25,6 +26,8 @@ const Index = () => {
         return <AchievementsScreen onBack={() => setCurrentScreen('menu')} />;
       case 'challenges':
         return <ChallengesScreen onBack={() => setCurrentScreen('menu')} />;
+      case 'leaderboard':
+        return <LeaderboardScreen onBack={() => setCurrentScreen('menu')} />;
       default:
         return <MainMenu onNavigate={setCurrentScreen} />;
     }

@@ -74,6 +74,16 @@ export default function MainMenu({ onNavigate }: MainMenuProps) {
           </Button>
 
           <Button
+            onClick={() => handleNavigate('leaderboard')}
+            variant="outline"
+            size="lg"
+            className="w-full text-lg h-14 hover:bg-secondary/10 hover:scale-105 transition-transform"
+          >
+            <Icon name="Medal" className="mr-2" size={24} />
+            Рейтинг
+          </Button>
+
+          <Button
             onClick={() => soundManager.play('click')}
             variant="ghost"
             size="lg"
