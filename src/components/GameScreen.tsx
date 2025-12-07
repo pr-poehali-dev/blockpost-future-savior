@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Progress } from '@/components/ui/progress';
+import { soundManager } from '@/utils/sounds';
 
 interface GameScreenProps {
   onBack: () => void;
@@ -16,16 +17,21 @@ export default function GameScreen({ onBack }: GameScreenProps) {
 
   const handleShoot = () => {
     if (ammo > 0) {
+      soundManager.play('shoot');
       setAmmo(ammo - 1);
       const hit = Math.random() > 0.5;
       if (hit) {
         setKills(kills + 1);
         setScore(score + 100);
+        soundManager.play('success');
       }
+    } else {
+      soundManager.play('error');
     }
   };
 
   const handleReload = () => {
+    soundManager.play('reload');
     setAmmo(30);
   };
 

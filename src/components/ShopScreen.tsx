@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { soundManager } from '@/utils/sounds';
 
 interface ShopScreenProps {
   onBack: () => void;
@@ -24,11 +25,20 @@ const rarityColors: Record<string, string> = {
 };
 
 export default function ShopScreen({ onBack }: ShopScreenProps) {
+  const handlePurchase = () => {
+    soundManager.play('success');
+  };
+
+  const handleBack = () => {
+    soundManager.play('click');
+    onBack();
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <div className="p-4 bg-card/80 backdrop-blur border-b border-primary/20">
         <div className="flex items-center justify-between">
-          <Button variant="ghost" size="icon" onClick={onBack}>
+          <Button variant="ghost" size="icon" onClick={handleBack}>
             <Icon name="ArrowLeft" size={24} />
           </Button>
           <h2 className="text-2xl font-bold">Магазин</h2>
@@ -65,7 +75,7 @@ export default function ShopScreen({ onBack }: ShopScreenProps) {
                   </div>
                 </div>
 
-                <Button size="lg" className="h-12">
+                <Button size="lg" className="h-12" onClick={handlePurchase}>
                   Купить
                 </Button>
               </div>

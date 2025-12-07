@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Icon from '@/components/ui/icon';
+import { soundManager } from '@/utils/sounds';
 
 interface ProfileScreenProps {
   onBack: () => void;
@@ -18,6 +19,11 @@ const stats = [
 ];
 
 export default function ProfileScreen({ onBack }: ProfileScreenProps) {
+  const handleBack = () => {
+    soundManager.play('click');
+    onBack();
+  };
+
   const level = 42;
   const xp = 7800;
   const xpNeeded = 10000;
@@ -27,7 +33,7 @@ export default function ProfileScreen({ onBack }: ProfileScreenProps) {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <div className="p-4 bg-card/80 backdrop-blur border-b border-primary/20">
         <div className="flex items-center justify-between">
-          <Button variant="ghost" size="icon" onClick={onBack}>
+          <Button variant="ghost" size="icon" onClick={handleBack}>
             <Icon name="ArrowLeft" size={24} />
           </Button>
           <h2 className="text-2xl font-bold">Профиль</h2>
