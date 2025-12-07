@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { soundManager } from '@/utils/sounds';
+import { useToast } from '@/hooks/use-toast';
 
 interface ShopScreenProps {
   onBack: () => void;
@@ -25,8 +27,34 @@ const rarityColors: Record<string, string> = {
 };
 
 export default function ShopScreen({ onBack }: ShopScreenProps) {
-  const handlePurchase = () => {
-    soundManager.play('success');
+  const [balance, setBalance] = useState(12450);
+  const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
+  const { toast } = useToast();
+
+  const handlePurchase = (item: typeof shopItems[0]) => {
+    if (balance >= item.price && !purchasedItems.includes(item.id)) {
+      soundManager.play('success');
+      setBalance(balance - item.price);
+      setPurchasedItems([...purchasedItems, item.id]);
+      toast({
+        title: "Покупка успешна!",
+        description: `Вы купили ${item.name}`,
+      });
+    } else if (purchasedItems.includes(item.id)) {
+      soundManager.play('error');
+      toast({
+        title: "Уже куплено",
+        description: "У вас уже есть этот предмет",
+        variant: "destructive",
+      });
+    } else {
+      soundManager.play('error');
+      toast({
+        title: "Недостаточно монет",
+        description: `Нужно ещё ${item.price - balance} монет`,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleBack = () => {
@@ -44,7 +72,7 @@ export default function ShopScreen({ onBack }: ShopScreenProps) {
           <h2 className="text-2xl font-bold">Магазин</h2>
           <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-lg">
             <Icon name="Coins" size={20} className="text-secondary" />
-            <span className="font-bold">12,450</span>
+            <span className="font-bold">{balance.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -75,9 +103,21 @@ export default function ShopScreen({ onBack }: ShopScreenProps) {
                   </div>
                 </div>
 
-                <Button size="lg" className="h-12" onClick={handlePurchase}>
-                  Купить
-                </Button>
+                {purchasedItems.includes(item.id) ? (
+                  <Badge variant="secondary" className="h-12 px-6">
+                    <Icon name="Check" size={16} className="mr-2" />
+                    Куплено
+                  </Badge>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="h-12" 
+                    onClick={() => handlePurchase(item)}
+                    disabled={balance < item.price}
+                  >
+                    Купить
+                  </Button>
+                )}
               </div>
             </Card>
           ))}
